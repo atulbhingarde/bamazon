@@ -9,13 +9,39 @@ var con = mysql.createConnection({
   password:MySecrets.MySqlDb.secret.replace('\r',""),
   database: 'bamazon'
 });
-con.connect(function(err) {
-    if (err) throw err;
-    con.query("SELECT * FROM products", function (err, result) {
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+function GetInput(thisQuestion) {
+rl.question(thisQuestion, (answer) => {
+  // TODO: Log the answer in a database
+  console.log(`Thank you for your valuable feedback: ${answer}`);
+
+  rl.close();
+}); 
+}
+
+con.connect(function(err) 
+  { var i=0; 
+    // GetInput("ha ha ");
+    do 
+     {
       if (err) throw err;
-      // console.log(result);
-      var table = cTable.getTable(result);
-      console.log(table);
-    });
-  }); 
-  
+      con.query
+       ("SELECT * FROM products", function (err, result) 
+        {
+         if (err) throw err;
+         // console.log(result);
+         var table = cTable.getTable(result);
+         console.log(table);
+        }
+       );
+      // get the id of the item 
+      // get the quantity of the item and check if the stock is sufficient for the order
+      // GetInput("hi there ");
+     } while ( i++ < 5 );
+  }
+  ); 
