@@ -1,0 +1,25 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atulbhingarde/bamazon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atulbhingarde/bamazon/issues"
+  },
+  "homepage": "https://github.com/atulbhingarde/bamazon#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^6.2.0",
+    "mysql": "^2.16.0"
+  }
+}
