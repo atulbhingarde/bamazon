@@ -1,7 +1,7 @@
 {
   "name": "bamazon",
   "version": "1.0.0",
-  "description": "test",
+  "description": "you may want to run following command *_ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'YourRootPassword';_* as is to ensure proper connectivity etc.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,9 @@
   "dependencies": {
     "console.table": "^0.10.0",
     "dotenv": "^6.2.0",
-    "mysql": "^2.16.0"
+    "fs": "0.0.1-security",
+    "mysql": "^2.16.0",
+    "readline": "^1.3.0",
+    "readline-sync": "^1.4.9"
   }
 }

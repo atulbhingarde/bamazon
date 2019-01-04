@@ -2,46 +2,36 @@
 var MySecrets = require('./ReadIdPass.js');
 var mysql = require('mysql');
 var cTable = require('console.table');
-
+// console.log(MySecrets.MysqlDb);
 var con = mysql.createConnection({
+  debug: false,
   host: "localhost",
   user: MySecrets.MySqlDb.id.replace('\r',""),
   password:MySecrets.MySqlDb.secret.replace('\r',""),
   database: 'bamazon'
 });
-const readline = require('readline');
+function displayStock()
+ {
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-function GetInput(thisQuestion) {
-rl.question(thisQuestion, (answer) => {
-  // TODO: Log the answer in a database
-  console.log(`Thank you for your valuable feedback: ${answer}`);
+  con.connect(); 
+  con.query('select * from products ; ', ( err, result ) => 
+   { 
 
-  rl.close();
-}); 
-}
-
-con.connect(function(err) 
-  { var i=0; 
-    // GetInput("ha ha ");
-    do 
-     {
-      if (err) throw err;
-      con.query
-       ("SELECT * FROM products", function (err, result) 
-        {
-         if (err) throw err;
-         // console.log(result);
-         var table = cTable.getTable(result);
-         console.log(table);
-        }
-       );
-      // get the id of the item 
-      // get the quantity of the item and check if the stock is sufficient for the order
-      // GetInput("hi there ");
-     } while ( i++ < 5 );
-  }
-  ); 
+     if (err) throw err;
+     // return result;
+     var table = cTable.getTable(result);
+     console.log(table);
+     
+  
+   }
+   );
+  con.end();
+ }
+  
+  displayStock();
+  
+  
+  // GetInput('Hi hi there 2 ');
+  // GetInput('Hi hi there 3 ');
+  // console.log('Hi hi there 1 ');
+  // console.log('Hi hi there 2 ');
