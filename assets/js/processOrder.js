@@ -3,7 +3,7 @@ var MySecrets = require('./ReadIdPass.js');
 var mysql = require('mysql');
 var cTable = require('console.table');
 // console.log(MySecrets.MysqlDb);
-const con = mysql.createConnection({
+var con = mysql.createConnection({
   debug: false,
   host: "localhost",
   user: MySecrets.MySqlDb.id.replace('\r',""),
@@ -11,11 +11,17 @@ const con = mysql.createConnection({
   database: 'bamazon'
 });
 module.exports = {
-  displayStock: function displayStock(displaythis)
+  
+   processOrder: function processOrder(thisOrder, displaythis)
    {
+    con.connect();
     console.log(displaythis);
-    con.connect(); 
-    con.query('select * from products ; ', function( err, result ) 
+
+    tt1 = thisOrder.itemId ; 
+    tt2 = thisOrder.itemQuantity;
+    const sqlstr = 'select count(*) from products where item_id = ' + tt1 + ' and stock_quantity > ' +tt2 +' ; ';
+    // console.log(sqlstr);
+    con.query(sqlstr , function( err, result )
     { 
      if (err) throw err;
      const table = cTable.getTable(result);
@@ -25,7 +31,6 @@ module.exports = {
     });
     // drop connection avoid leakl
     con.end();
-  }
-
+   }
 };
 // con.destroy();
