@@ -14,7 +14,7 @@ module.exports = {
   
    processOrder: function processOrder(thisOrder, displaythis)
    {
-    con.connect();
+    // try1 con.connect();
     console.log(displaythis);
 
     req_item_id = thisOrder.itemId ; 
@@ -25,7 +25,7 @@ module.exports = {
     { 
      if (err) throw err;
      // con.end();
-     const table = cTable.getTable(result);
+     var table = cTable.getTable(result);
 
      jj = JSON.stringify(result);
 
@@ -36,9 +36,10 @@ module.exports = {
      if ( stock_quantity_on_hand >= req_item_qty  )
       { 
         console.log(' we can process the order based on the stock and order quantity !');
+        sqlstr = ' select * from products ; ';
         con.query(sqlstr , function( err, result )
         {  
-         if (err) throw err;
+         // try1 if (err) throw err;
          console.log(" customer price is " + req_item_price);
          console.log(" customer cost for the order is " + req_item_qty * req_item_price );
          // lets update the db as a result of the transaction 
@@ -46,23 +47,33 @@ module.exports = {
          new_quantity = stock_quantity_on_hand - req_item_qty ; 
          sqlstr = 'update products set stock_quantity = ' + new_quantity + ' where item_id = ' + req_item_id + ' ; ';
          console.log(sqlstr);
-         /* con.query(sqlstr , function( err, result ) 
+         con.query(sqlstr , function( err, result ) 
           {
             if ( err ) throw err;
             console.log('appears that the update is successful');
-          }); */
-
+            sqlstr = 'select * from products ; ';
+            con.query(sqlstr , function( err, result ) {
+              if ( err ) throw err;
+              
+              table = cTable.getTable(result);
+              console.log(table);
+            });
+            con.end();
+          }); 
+          
         });
       } else 
       {
         console.log(' sorry its not possible to process the order based on the stock and order quenity');
+        con.end();
       }
      // console.log(result.count('*'));
-     con.end();
+     // con.end();
      return table;
     });
     // drop connection avoid leakl
     // con.end();
    }
+   // con.end();
 };
 // con.destroy();
