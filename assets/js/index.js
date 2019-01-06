@@ -1,16 +1,20 @@
+var MyDebug = false ; 
 const inquirer  = require('./inquirer');
-const bamazonCustomer  = require('./bamazonCustomer');
+var bamazonCustomer  = require('./bamazonCustomer');
+var bamazonCustomer1  = require('./bamazonCustomer');
+
 const processOrder = require('./processOrder');
 
 var ThisOrder;
 const run = async () => {
 
   ThisOrder = await inquirer.GetOrder('this should be first');
-  console.log(" here 1 item id " + ThisOrder.itemId + " Quantity " + ThisOrder.itemQuantity);
-  const tt = await bamazonCustomer.displayStock('this should be second');
-  console.log(" here 2 ");
+  MyDebug &&  console.log(" here 1 item id " + ThisOrder.itemId + " Quantity " + ThisOrder.itemQuantity);
+  var tt = await bamazonCustomer.displayStock('this should be second');
+  MyDebug &&  console.log(" here 2 ");
   await processOrder.processOrder(ThisOrder,'this should be third');
-  tt = await bamazonCustomer.displayStock('this should be after processing order !');
+  
+  // await bamazonCustomer1.displayStock('this should be after processing order !');
 
 
   // console.log(tt);
