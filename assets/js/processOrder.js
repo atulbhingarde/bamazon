@@ -35,7 +35,8 @@ module.exports = {
 
      if ( stock_quantity_on_hand >= req_item_qty  )
       { 
-        console.log(' we can process the order based on the stock and order quantity !');
+        console.log(' we can process the order based on the stock and order quantity ! as required quantity is ' + req_item_qty + ' is less than ' + stock_quantity_on_hand );
+        
         sqlstr = ' select * from products ; ';
         con.query(sqlstr , function( err, result )
         {  
@@ -54,7 +55,6 @@ module.exports = {
             sqlstr = 'select * from products ; ';
             con.query(sqlstr , function( err, result ) {
               if ( err ) throw err;
-              
               table = cTable.getTable(result);
               console.log(table);
             });
@@ -64,7 +64,8 @@ module.exports = {
         });
       } else 
       {
-        console.log(' sorry its not possible to process the order based on the stock and order quenity');
+        console.log(' we can not process the order based on the stock and order quantity ! as required quantity is ' + req_item_qty + ' is more than ' + stock_quantity_on_hand );
+        
         con.end();
       }
      // console.log(result.count('*'));

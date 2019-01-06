@@ -1,35 +1,25 @@
-// this module allows user to interact with the existing db for customers to place order
-var MySecrets = require('./ReadIdPass.js');
-var mysql = require('mysql');
-var cTable = require('console.table');
-// console.log(MySecrets.MysqlDb);
-// console.log(con);
-const con = mysql.createConnection({
-  debug: false,
-  host: "localhost",
-  user: MySecrets.MySqlDb.id.replace('\r',""),
-  password:MySecrets.MySqlDb.secret.replace('\r',""),
-  database: 'bamazon'
-});
-// console.log(con);
-module.exports = {
-  displayStock: function displayStock(displaythis)
-   {
-    console.log(displaythis);
-    
-    con.connect();
-    con.query('select * from products ; ', function( err, result ) 
-    { 
-     if (err) throw err;
-     con.end();
-     const table = cTable.getTable(result);
-     console.log(table);
-     // con.end();
-     return table;
-    });
-    // drop connection avoid leakl
-    // con.disconnect();
-  }
+var MyDebug = false ; 
+const inquirer  = require('./inquirer');
+// try1 var bamazonCustomer  = require('./bamazonCustomer');
+// try1 var bamazonCustomer1  = require('./bamazonCustomer');
 
-};
-// con.destroy();
+const processOrder = require('./processOrder');
+
+var ThisOrder;
+const run = async () => {
+
+  ThisOrder = await inquirer.GetOrder('this should be first');
+  MyDebug &&  console.log(" here 1 item id " + ThisOrder.itemId + " Quantity " + ThisOrder.itemQuantity);
+  // try1 var tt = await bamazonCustomer.displayStock('this should be second');
+  MyDebug &&  console.log(" here 2 ");
+  await processOrder.processOrder(ThisOrder,'this should be third');
+  
+  // await bamazonCustomer1.displayStock('this should be after processing order !');
+
+
+  // console.log(tt);
+  
+}
+
+run();
+// console.log(ThisOrder);
