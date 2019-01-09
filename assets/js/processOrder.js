@@ -1,4 +1,5 @@
 // this module allows user to interact with the existing db for customers to place order
+var MyDebug = false ; 
 var MySecrets = require('./ReadIdPass.js');
 var mysql = require('mysql');
 var cTable = require('console.table');
@@ -15,7 +16,7 @@ module.exports = {
    processOrder: function processOrder(thisOrder, displaythis)
    {
     // try1 con.connect();
-    console.log(displaythis);
+    MyDebug && console.log(displaythis);
 
     req_item_id = thisOrder.itemId ; 
     req_item_qty = thisOrder.itemQuantity;
@@ -41,17 +42,17 @@ module.exports = {
         con.query(sqlstr , function( err, result )
         {  
          // try1 if (err) throw err;
-         console.log(" customer price is " + req_item_price);
-         console.log(" customer cost for the order is " + req_item_qty * req_item_price );
+         MyDebug && console.log(" customer price is " + req_item_price);
+         MyDebug && console.log(" customer cost for the order is " + req_item_qty * req_item_price );
          // lets update the db as a result of the transaction 
          // set the sql for that 
          new_quantity = stock_quantity_on_hand - req_item_qty ; 
          sqlstr = 'update products set stock_quantity = ' + new_quantity + ' where item_id = ' + req_item_id + ' ; ';
-         console.log(sqlstr);
+         MyDebug && console.log(sqlstr);
          con.query(sqlstr , function( err, result ) 
           {
             if ( err ) throw err;
-            console.log('appears that the update is successful');
+            MyDebug && console.log('appears that the update is successful');
             sqlstr = 'select * from products ; ';
             con.query(sqlstr , function( err, result ) {
               if ( err ) throw err;
